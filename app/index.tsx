@@ -4,25 +4,39 @@
  * @format
  */
 
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native';
 
-// 1. Import your new components
-import ToDoList from './ToDoList.jsx';
 import ToDoForm from './ToDoForm.jsx';
+import ToDoList from './ToDoList.jsx';
 
 function App() {
+  // Initialize state with a list of tasks
+  const [tasks, setTasks] = useState([
+    'Do laundry',
+    'Go to gym',
+    'Walk dog',
+  ]);
+
+  // FIX 1: Add the ': string' type to the taskText parameter.
+  const addTask = (taskText: string) => {
+    // Prevent adding empty tasks
+    if (taskText.trim().length > 0) {
+      setTasks([...tasks, taskText]);
+    }
+  };
+
   return (
     <SafeAreaView>
-      {/* 2. Render the components */}
-      <ToDoList />
-      <ToDoForm />
+      {/* Pass the tasks array to the ToDoList component */}
+      <ToDoList tasks={tasks} />
+
+      {/* Pass the addTask function to the ToDoForm component */}
+      <ToDoForm onAddTask={addTask} />
     </SafeAreaView>
   );
 }
 
-// Note: No styles are needed here anymore since they were moved
-// to their respective components. You can delete the styles const.
-const styles = StyleSheet.create({}); // Or remove completely
+// FIX 2: The unused 'styles' constant has been removed.
 
 export default App;
