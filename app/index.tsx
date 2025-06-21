@@ -5,38 +5,55 @@
  */
 
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import ToDoForm from './ToDoForm.jsx';
 import ToDoList from './ToDoList.jsx';
 
 function App() {
-  // Initialize state with a list of tasks
   const [tasks, setTasks] = useState([
     'Do laundry',
     'Go to gym',
     'Walk dog',
   ]);
 
-  // FIX 1: Add the ': string' type to the taskText parameter.
+  // Part 1 & 3: The addTask function is implemented here.
   const addTask = (taskText: string) => {
-    // Prevent adding empty tasks
-    if (taskText.trim().length > 0) {
-      setTasks([...tasks, taskText]);
+    // Part 4 Enhancement: Prevents adding empty or duplicate tasks.
+    if (tasks.includes(taskText) || taskText.trim().length === 0) {
+      return;
     }
+    setTasks([...tasks, taskText]);
   };
 
   return (
-    <SafeAreaView>
-      {/* Pass the tasks array to the ToDoList component */}
-      <ToDoList tasks={tasks} />
-
-      {/* Pass the addTask function to the ToDoForm component */}
-      <ToDoForm onAddTask={addTask} />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.contentWrapper}>
+        <Text style={styles.header}>My To-Do List</Text>
+        <ToDoList tasks={tasks} />
+        {/* Part 1: The addTask function is passed as a prop here. */}
+        <ToDoForm addTask={addTask} />
+      </View>
     </SafeAreaView>
   );
 }
 
-// FIX 2: The unused 'styles' constant has been removed.
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  contentWrapper: {
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+    textAlign: 'center',
+  },
+});
+
 
 export default App;

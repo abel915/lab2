@@ -1,24 +1,31 @@
-import { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-// Accept the onAddTask function as a prop
-const ToDoForm = ({ onAddTask }) => {
+// Part 1: The addTask prop is destructured here.
+const ToDoForm = ({ addTask }) => {
+    // Part 2: State is managed for the input field.
     const [taskText, setTaskText] = useState('');
 
     const handleAddTask = () => {
-        onAddTask(taskText);
-        setTaskText(''); // Clear the input field after adding
+        addTask(taskText);
+        // Part 4 Enhancement: The input is cleared after submission.
+        setTaskText('');
     };
 
     return (
         <View style={styles.form}>
+            {/* Part 2: The TextInput is fully implemented. */}
             <TextInput
                 style={styles.input}
                 placeholder="Add a new task..."
-                onChangeText={setTaskText} // Update state on text change
-                value={taskText} // Bind input value to state
+                onChangeText={setTaskText}
+                value={taskText}
+                placeholderTextColor="#999"
             />
-            <Button title="Add" onPress={handleAddTask} />
+            {/* Part 2: The button calls the handler on press. */}
+            <Pressable style={styles.addButton} onPress={handleAddTask}>
+                <Text style={styles.addButtonText}>Add</Text>
+            </Pressable>
         </View>
     );
 };
@@ -26,18 +33,31 @@ const ToDoForm = ({ onAddTask }) => {
 const styles = StyleSheet.create({
     form: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginHorizontal: 20,
         marginTop: 20,
     },
     input: {
         flex: 1,
         borderWidth: 1,
-        borderColor: '#ccc',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        borderColor: '#dcdcdc',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         marginRight: 10,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        fontSize: 16,
+    },
+    addButton: {
+        backgroundColor: '#007AFF',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 

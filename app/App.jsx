@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ToDoList from './ToDoList';
 
 function App() {
-    // Part A: Define a state variable and initialize it with a hard-coded list of tasks.
     const [tasks, setTasks] = useState([
         'Do laundry',
         'Go to gym',
